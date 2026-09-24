@@ -15,6 +15,9 @@ from window import generate_initial_platforms
 
 # ======================== PARTIE 3.1 ========================
 def apply_gravity():
+    doodle_dict["vel_y"] += GRAVITY
+    doodle_dict["y"] += doodle_dict["vel_y"]
+    return
     """
     Applique la gravité au Doodle en augmentant progressivement sa vitesse verticale (vel_y).
     Met à jour la position verticale (y) du Doodle.
@@ -88,21 +91,62 @@ def check_platform_collisions():
     Le rebond ne se produit QUE lorsque le Doodle descend (vel_y > 0)
     et qu'il arrive sur le dessus d'une plateforme.
     """
-    # TODO : Implémentez la détection d'un atterrissage.
-    #
-    # Contraintes :
-    # - aucun rebond pendant la montée ;
-    # - ignorer les plateformes inactives ;
-    # - utiliser rects_collide(...) pour le chevauchement des rectangles ;
-    # - un simple chevauchement ne suffit pas : le Doodle doit arriver par
-    #   le dessus de la plateforme. Pour le vérifier, comparez la position
-    #   actuelle de ses pieds à leur position approximative à l'image
-    #   précédente à l'aide de vel_y. Une tolérance de 14 pixels est permise ;
-    # - spring : SPRING_JUMP_VELOCITY ;
-    # - brown : JUMP_VELOCITY puis désactivation de la plateforme ;
-    # - green/blue : JUMP_VELOCITY.
 
-    return
+    # Aucun rebond pendant la montée ou lorsque le Doodle ne bouge pas vers le bas.
+    if doodle_dict["vel_y"] <= 0:
+        return
+
+    doodle_rect = (
+        doodle_dict["x"],
+        doodle_dict["y"],
+        DOODLE_WIDTH,
+        DOODLE_HEIGHT
+    )
+
+    # Position approximative des pieds du Doodle à l'image précédente.
+    previous_feet_y = (
+        doodle_dict["y"]
+        + DOODLE_HEIGHT
+        - doodle_dict["vel_y"]
+    )
+
+    current_feet_y = doodle_dict["y"] + DOODLE_HEIGHT
+
+    for platform in PLATFORMS:
+
+        # Ignorer les plateformes inactives.
+        if not platform["active"]:
+            continue
+
+        platform_rect = (
+            platform["x"],
+            platform["y"],
+            PLATFORM_WIDTH,
+            platform["height"]
+        )
+
+        # Il doit d'abord y avoir un chevauchement entre les rectangles.
+        if not rects_collide(doodle_rect, platform_rect):
+            continue
+
+        # Vérifier que le Doodle arrive sur le dessus de la plateforme.
+        # Une tolérance de 14 pixels est autorisée.
+        if (
+            previous_feet_y <= platform["y"] + 14
+            and current_feet_y >= platform["y"]
+        ):
+            # Déterminer la puissance du rebond.
+            if platform["type"] == "spring":
+                doodle_dict["vel_y"] = SPRING_JUMP_VELOCITY
+            else:
+                doodle_dict["vel_y"] = JUMP_VELOCITY
+
+            # Une plateforme brown devient inactive après utilisation.
+            if platform["type"] == "brown":
+                platform["active"] = False
+
+            # Un seul rebond par appel.
+            return
 
 # ===========================================================
 
