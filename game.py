@@ -61,7 +61,7 @@ def move_platforms():
     # bleues encore actives. Elles doivent rester dans la fenêtre en inversant
     # leur vitesse lorsqu'elles atteignent un bord.
     for platform in PLATFORMS:
-        if platform["type"] == blue and platform["active"]:
+        if platform["type"] == "blue" and platform["active"]:
             platform["x"] += platform["vx"]
 
 
