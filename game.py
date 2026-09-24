@@ -114,7 +114,27 @@ def scroll_camera():
     Met à jour le score et maintient les plateformes visibles.
     """
 
-    if 
+    if doodle_dict["y"] <= CAMERA_SCROLL_THRESHOLD:
+
+        scroll = CAMERA_SCROLL_THRESHOLD - doodle_dict["y"]
+
+        doodle_dict["y"] = CAMERA_SCROLL_THRESHOLD
+
+        
+
+        for platform in PLATFORMS:
+            platform["y"] += scroll
+
+            
+
+
+        doodle_dict["score"] += scroll
+        if doodle_dict["score"] > doodle_dict["highscore"]:
+            doodle_dict["score"] = doodle_dict["highscore"]
+
+        PLATFORMS[:] = [p for p in PLATFORMS if p["y"] <= SCREEN_HEIGHT]
+
+        generate_new_platforms()
 
     # TODO : Lorsque le Doodle dépasse le seuil de caméra, il doit rester
     # visuellement au seuil pendant que les plateformes sont déplacées vers
