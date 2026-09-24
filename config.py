@@ -24,7 +24,7 @@ PLATFORM_SIZE = (PLATFORM_WIDTH, PLATFORM_HEIGHT)
 
 # Limites de distance verticale entre les plateformes
 MIN_PLATFORM_GAP = 70
-MAX_PLATFORM_GAP = 100
+MAX_PLATFORM_GAP = 140
 
 # Vitesse des plateformes mobiles (bleues)
 MOVING_PLATFORM_SPEED = 3
