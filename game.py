@@ -173,8 +173,8 @@ def scroll_camera():
 
 
         doodle_dict["score"] += scroll
-        if doodle_dict["score"] > doodle_dict["high score"]:
-            doodle_dict["score"] = doodle_dict["high score"]
+        if doodle_dict["score"] > doodle_dict["high_score"]:
+            doodle_dict["high_score"] = doodle_dict["score"]
 
         PLATFORMS[:] = [p for p in PLATFORMS if p["y"] <= SCREEN_HEIGHT]
 
