@@ -71,7 +71,10 @@ def move_platforms():
     for platform in PLATFORMS:
         if platform["type"] == "blue" and platform["active"]:
             platform["x"] += platform["vx"]
-
+    if platform["x"] + platform["width"] >= SCREEN_WIDTH:  #les pixels ont des imprécisions donc on peux pas utiliser ==
+        platform["vx"] *= -1
+    elif platform["x"] <= 0:   
+        platform["vx"] *= -1
 
     return
 
