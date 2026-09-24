@@ -176,14 +176,33 @@ def generate_new_platforms():
     Génère de nouvelles plateformes au-dessus du haut de l'écran pour maintenir
     un flux continu lorsque la caméra défile.
     """
-    # TODO : Complétez cette fonction en vous inspirant de la logique de
-    # génération initiale, sans la recopier inutilement.
-    #
-    # Vous devrez partir de la plateforme actuellement la plus haute et
-    # continuer à ajouter des plateformes tant que nécessaire. Utilisez
-    # choose_platform_type(...) avec les probabilités indiquées dans le README.
 
-    return
+    # Si aucune plateforme n'existe, on ne peut pas déterminer
+    # laquelle est actuellement la plus haute.
+    if not PLATFORMS:
+        return
+
+    # La plateforme ayant le plus petit y est la plus haute.
+    highest_platform = min(PLATFORMS, key=lambda platform: platform["y"])
+
+    # Position de départ pour la prochaine plateforme.
+    next_y = highest_platform["y"]
+
+    # Continuer à générer des plateformes tant qu'il n'y en a pas
+    # suffisamment au-dessus de l'écran.
+    while next_y > -SCREEN_HEIGHT:
+        gap = random.randint(MIN_PLATFORM_GAP, MAX_PLATFORM_GAP)
+        next_y -= gap
+
+        # Position horizontale valide.
+        x = random.randint(0, SCREEN_WIDTH - PLATFORM_WIDTH)
+
+        # 55 % green, 20 % blue, 13 % spring.
+        # Le 12 % restant correspond automatiquement à brown.
+        platform_type = choose_platform_type(0.55, 0.20, 0.13)
+
+        platform = create_platform(x, next_y, platform_type)
+        PLATFORMS.append(platform)
 
 # ===========================================================
 
