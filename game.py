@@ -113,6 +113,9 @@ def scroll_camera():
     Fait défiler le monde lorsque le Doodle dépasse CAMERA_SCROLL_THRESHOLD.
     Met à jour le score et maintient les plateformes visibles.
     """
+
+    if 
+
     # TODO : Lorsque le Doodle dépasse le seuil de caméra, il doit rester
     # visuellement au seuil pendant que les plateformes sont déplacées vers
     # le bas de la même distance.
