@@ -64,6 +64,21 @@ def create_platform(x, y, platform_type="green"):
 
 # ======================== PARTIE 2.2 ========================
 def choose_platform_type(green_probability, blue_probability, spring_probability):
+    roll = random.random()
+
+    if roll < green_probability:
+        return "green"
+    elif roll < green_probability + blue_probability:
+        return "blue"
+    elif roll < green_probability + blue_probability + spring_probability:
+        return "spring"
+    else:
+        return "brown"
+
+
+
+
+
     """
     Choisit aléatoirement un type de plateforme.
 
@@ -72,14 +87,8 @@ def choose_platform_type(green_probability, blue_probability, spring_probability
     plateforme marron.
     """
 
-    # TODO : Utilisez random.random() et les probabilités reçues en paramètres
-    # pour retourner l'une des chaînes suivantes :
-    # "green", "blue", "spring" ou "brown".
-    #
-    # Attention : les seuils utilisés avec random.random() doivent être
-    # cumulatifs.
 
-    return "green"  # Valeur temporaire à remplacer
+    
 
 # ===========================================================
 
