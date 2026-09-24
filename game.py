@@ -68,16 +68,21 @@ def move_platforms():
     Déplace horizontalement les plateformes mobiles ("blue").
     Fait rebondir les plateformes lorsqu'elles atteignent les bords de la fenêtre.
     """
-    # TODO : Parcourez les plateformes et gérez le déplacement des plateformes
-    # bleues encore actives. Elles doivent rester dans la fenêtre en inversant
-    # leur vitesse lorsqu'elles atteignent un bord.
+
     for platform in PLATFORMS:
         if platform["type"] == "blue" and platform["active"]:
+
             platform["x"] += platform["vx"]
-    if platform["x"] + platform["width"] >= SCREEN_WIDTH:  #les pixels ont des imprécisions donc on peux pas utiliser ==
-        platform["vx"] *= -1
-    elif platform["x"] <= 0:   
-        platform["vx"] *= -1
+
+            # Bord droit
+            if platform["x"] + platform["width"] >= SCREEN_WIDTH:
+                platform["x"] = SCREEN_WIDTH - platform["width"]
+                platform["vx"] *= -1
+
+            # Bord gauche
+            elif platform["x"] <= 0:
+                platform["x"] = 0
+                platform["vx"] *= -1
 
     return
 
